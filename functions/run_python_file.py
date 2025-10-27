@@ -12,7 +12,7 @@ import sys
 #* Please heed the warning above that this was created for learning purposes. *#
 #* Remove comments at your own risk.                                          *#
 #*############################################################################*#
-"""
+#"""
 def run_python_file(working_directory, file_path, args=[]):
     abs_working = os.path.abspath(working_directory)
     abs_target = os.path.abspath(os.path.join(abs_working, file_path))
@@ -41,4 +41,17 @@ def run_python_file(working_directory, file_path, args=[]):
     except Exception as e:
         return(f"Error: executing Python file: {e}")
 
-"""
+schema_run_python_file = types.FunctionDeclaration(
+    name="run_python_file",
+    description="Lists files in the specified directory along with their sizes, constrained to the working directory.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "directory": types.Schema(
+                type=types.Type.STRING,
+                description="The directory to list files from, relative to the working directory. If not provided, lists files in the working directory itself.",
+            ),
+        },
+    ),
+)
+#"""
