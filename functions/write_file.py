@@ -1,4 +1,6 @@
 import os
+from google import genai
+from google.genai import types
 
 def write_file(working_directory, file_path, content):
     abs_working = os.path.abspath(working_directory)
@@ -22,14 +24,19 @@ def write_file(working_directory, file_path, content):
 
 schema_write_file = types.FunctionDeclaration(
     name="write_file",
-    description="Lists files in the specified directory along with their sizes, constrained to the working directory.",
+    description="Writes the included message to the specified file within the working directory",
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
-            "directory": types.Schema(
+            "file_path": types.Schema(
                 type=types.Type.STRING,
-                description="The directory to list files from, relative to the working directory. If not provided, lists files in the working directory itself.",
+                description="The path to the file that will be written to, relative to the working directory.",
             ),
+            "message": types.Schema(
+                type=types.Type.STRING,
+                description="The string to that will be written.",
+            )
         },
+        required =["file_path","message"]
     ),
 )

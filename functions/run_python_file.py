@@ -1,6 +1,8 @@
 import os
 import subprocess
 import sys
+from google import genai
+from google.genai import types
 
 #!###############################################################################################!#
 #! Do not give this program to others for them to use!                                           !#
@@ -12,7 +14,7 @@ import sys
 #* Please heed the warning above that this was created for learning purposes. *#
 #* Remove comments at your own risk.                                          *#
 #*############################################################################*#
-#"""
+"""
 def run_python_file(working_directory, file_path, args=[]):
     abs_working = os.path.abspath(working_directory)
     abs_target = os.path.abspath(os.path.join(abs_working, file_path))
@@ -43,15 +45,24 @@ def run_python_file(working_directory, file_path, args=[]):
 
 schema_run_python_file = types.FunctionDeclaration(
     name="run_python_file",
-    description="Lists files in the specified directory along with their sizes, constrained to the working directory.",
+    description="Runs the python file listed within the working directory.",
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
-            "directory": types.Schema(
+            "file_path": types.Schema(
                 type=types.Type.STRING,
-                description="The directory to list files from, relative to the working directory. If not provided, lists files in the working directory itself.",
+                description="The path that will be used to locate the file.",
+            ),
+            "optional_args": types.Schema(
+                type=types.Type.ARRAY,
+                description="Execute Python files with optional arguments.",
+                items=types.Schema(
+                    type=types.Type.STRING,
+                    description="A single argument to be passed to the Python script."
+                ),
             ),
         },
+        required=["file_path"]
     ),
 )
-#"""
+"""
